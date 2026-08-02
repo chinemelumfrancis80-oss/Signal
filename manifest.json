@@ -1,0 +1,12 @@
+{
+  "name": "Signal \u2014 Personal Information Intelligence",
+  "short_name": "Signal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f6f8",
+  "theme_color": "#0b0d10",
+  "icons": [],
+  "description": "Source-first personal information intelligence.",
+  "scope": "/",
+  "orientation": "portrait-primary"
+}

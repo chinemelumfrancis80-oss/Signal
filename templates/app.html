@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signal · Personal Information Intelligence</title>
+<link rel="manifest" href="/static/manifest.json"><meta name="theme-color" content="#0b0d10">
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#101318;--muted:#727b89;--line:#e4e7ec;--dark:#0b0d10;--dark2:#171b23;--blue:#365cf5;--green:#13836e;--r:18px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit;cursor:pointer}
+.side{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--dark);color:#fff;padding:25px 15px;z-index:20}.logo{font-size:25px;font-weight:900;letter-spacing:-.06em;padding:5px 12px 28px}.logo i{font-style:normal;color:#7e899d}.nav{display:grid;gap:3px}.nav label{font-size:9px;letter-spacing:.14em;color:#657084;padding:18px 12px 7px;text-transform:uppercase}.nav a{color:#aeb6c4;text-decoration:none;font-size:12px;padding:11px 12px;border-radius:10px}.nav a:hover,.nav a.active{background:var(--dark2);color:#fff}.sidefoot{position:absolute;bottom:18px;padding:0 12px;color:#687386;font-size:9px}
+.main{margin-left:250px}.wrap{max-width:1350px;margin:auto;padding:28px 42px 80px}.top{display:flex;justify-content:space-between;align-items:flex-start}.eyebrow{text-transform:uppercase;color:var(--muted);font-size:10px;letter-spacing:.13em}.title{font-size:38px;line-height:1.02;letter-spacing:-.055em;font-weight:850;margin-top:7px}.live{font-size:10px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 11px}.live i{display:inline-block;width:6px;height:6px;background:#16a48a;border-radius:50%;margin-right:5px}
+.search{display:flex;background:#fff;border:1px solid var(--line);border-radius:15px;margin:24px 0 12px;padding:5px 6px 5px 15px;box-shadow:0 8px 25px #10131808}.search span{color:#87909e}.search input{border:0;outline:0;flex:1;background:transparent;padding:11px;font-size:14px}.search button{border:0;background:var(--ink);color:#fff;border-radius:10px;padding:10px 16px;font-weight:800;font-size:11px}.chips{display:flex;gap:7px;overflow:auto}.chip{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:10px;color:#586271}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.75fr);gap:24px}.head{display:flex;justify-content:space-between;align-items:center;margin:28px 0 10px}.head h2{font-size:17px;letter-spacing:-.025em;margin:0}.head span{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 4px 15px #10131805}.story{padding:20px;margin:10px 0}.meta{font-size:10px;color:var(--muted);display:flex;gap:7px;align-items:center}.dot{width:6px;height:6px;background:var(--green);border-radius:50%}.story h3{font-size:19px;line-height:1.27;letter-spacing:-.03em;margin:9px 0 7px}.story p,.result p{font-size:12px;line-height:1.6;color:#5d6775;margin:0 0 14px}.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button,.filter{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;font-size:10px}.actions .primary{background:var(--ink);color:#fff;border-color:var(--ink)}.actions .ai{font-weight:850}
+.topic{padding:18px;margin:10px 0}.topicTop{display:flex;justify-content:space-between;gap:10px}.topic b{font-size:12px}.topic small{display:block;color:var(--muted);font-size:9.5px;margin-top:3px}.follow{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;font-size:9px}.timeline{border-left:1px solid #dce0e6;margin:15px 0 0 6px;padding-left:15px}.event{margin-bottom:17px}.event .year{font-size:8px;color:#8b93a0;letter-spacing:.1em;text-transform:uppercase}.event b{font-size:11px;display:block;margin-top:3px}.future{background:#f1f3f6;border-radius:11px;padding:11px;font-size:9.5px;color:#5e6876;line-height:1.5}
+.screen{display:none}.screen.active{display:block}.intro{margin:25px 0 18px}.intro h2{font-size:30px;letter-spacing:-.045em;margin:0 0 5px}.intro p{font-size:12px;color:var(--muted);margin:0}.result{padding:18px;margin:9px 0}.source{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.result h3{font-size:16px;margin:7px 0}.entitygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.entity{padding:16px;text-align:left}.entity b{font-size:12px}.entity small{display:block;color:var(--muted);font-size:9px;margin-top:5px}.settings .setting{padding:16px;margin:9px 0;display:flex;justify-content:space-between;align-items:center}.setting b{font-size:11px}.setting small{display:block;color:var(--muted);font-size:9px;margin-top:4px}.toggle{width:38px;height:21px;border-radius:99px;background:#d8dce2}.toggle.on{background:var(--blue)}
+.bottom{display:none}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,15px);opacity:0;background:#11151b;color:#fff;border-radius:10px;padding:10px 13px;font-size:10px;z-index:50;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal{position:fixed;inset:0;background:#0b0d1090;z-index:40;display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.modalbox{background:#fff;width:min(760px,100%);max-height:85vh;overflow:auto;border-radius:20px;padding:24px}.modalbox h2{font-size:23px;margin:0 0 8px}.modalbox p{font-size:12px;line-height:1.7;color:#5c6675}.close{float:right;border:0;background:#f0f2f5;border-radius:8px;padding:7px 10px}
+@media(max-width:900px){.side{display:none}.main{margin:0}.wrap{padding:20px 15px 80px}.title{font-size:30px}.live{display:none}.grid{grid-template-columns:1fr}.bottom{display:flex;position:fixed;z-index:30;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);justify-content:space-around;padding:7px}.bottom a{font-size:9px;color:#6e7786;text-decoration:none;padding:5px}.bottom a.active{color:#111;font-weight:850}.entitygrid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.entitygrid{grid-template-columns:1fr}.story h3{font-size:17px}}
+</style>
+</head>
+<body>
+<aside class="side">
+<div class="logo">signal<i>.</i></div>
+<nav class="nav">
+<a href="/" class="{{'active' if screen=='home' else ''}}">◉ &nbsp;Home</a>
+<a href="/screen/explore" class="{{'active' if screen=='explore' else ''}}">⌕ &nbsp;Explore</a>
+<a href="/screen/search" class="{{'active' if screen=='search' else ''}}">⌕ &nbsp;Search</a>
+<a href="/screen/timeline" class="{{'active' if screen=='timeline' else ''}}">↗ &nbsp;Timeline</a>
+<label>Your world</label>
+<a href="/screen/topic-nigeria">🇳🇬 &nbsp;Nigeria</a>
+<a href="/screen/topic-technology">⌘ &nbsp;Technology</a>
+<a href="/screen/topic-pharmacy-&-healthcare">＋ &nbsp;Pharmacy & Healthcare</a>
+<a href="/screen/topic-science">◌ &nbsp;Science</a>
+<a href="/screen/topic-business">◈ &nbsp;Business</a>
+<label>Library</label>
+<a href="/screen/following">♡ &nbsp;Following</a>
+<a href="/screen/saved">▱ &nbsp;Saved</a>
+<a href="/screen/settings">⚙ &nbsp;Settings</a>
+</nav>
+<div class="sidefoot">Original sources first · AI optional</div>
+</aside>
+
+<main class="main"><div class="wrap">
+<div class="top"><div><div class="eyebrow">Sunday · August 2, 2026</div><div class="title">
+{% if screen=='home' %}Stay informed.<br>Go deeper.
+{% elif screen=='explore' %}Explore.<br>Find connections.
+{% elif screen=='search' %}Search everything.<br>Past, present, future.
+{% elif screen=='timeline' %}See the story.<br>Understand the timeline.
+{% elif screen=='following' %}Keep watch.<br>Follow what matters.
+{% elif screen=='saved' %}Your library.<br>Come back to it.
+{% elif screen=='settings' %}Make it yours.<br>Control the experience.
+{% else %}{{ screen.replace('topic-','').replace('-',' ').title() }}.<br>What is changing?
+{% endif %}</div></div><div class="live"><i></i>Live source monitor</div></div>
+
+<div class="search"><span>⌕</span><input id="q" placeholder="Search a topic, event, company, person or question…"><button onclick="doSearch()">Search</button></div>
+<div class="chips">
+<button class="chip" onclick="searchFor('Nigeria pharmaceutical manufacturing')">Nigeria pharma</button>
+<button class="chip" onclick="searchFor('AI in healthcare')">AI + healthcare</button>
+<button class="chip" onclick="searchFor('Nigerian startups')">Nigerian startups</button>
+<button class="chip" onclick="searchFor('Nigeria economy')">Nigeria economy</button>
+<button class="chip" onclick="searchFor('NAFDAC')">NAFDAC</button>
+</div>
+
+{% if screen=='home' %}
+<div class="grid"><section>
+<div class="head"><h2>Latest signals</h2><span>Original sources first</span></div>
+{% for a in articles %}
+<article class="card story">
+<div class="meta"><span class="dot"></span>{{a.source}} · {{a.topic}}</div>
+<h3>{{a.title}}</h3><p>{{a.summary[:330]}}</p>
+<div class="actions"><button class="primary" onclick="openOriginal('{{a.url|e}}')">Read original ↗</button><button class="ai" onclick="aiFor({{a.id}},'summary')">✦ Summary</button><button onclick="aiFor({{a.id}},'why')">Why it matters</button><button onclick="save({{a.id}})">{{'▣ Saved' if a.id in saved else '▱ Save'}}</button><button onclick="goTimeline({{a.id}})">Timeline</button></div>
+</article>
+{% else %}<div class="card story"><h3>Your live feed is waiting for sources.</h3><p>Signal is already configured to ingest its feed list. Add/replace sources in <code>DEFAULT_FEEDS</code> and refresh.</p></div>{% endfor %}
+</section><aside>
+<div class="head"><h2>Followed topic</h2></div>
+<div class="card topic"><div class="topicTop"><div><b>Nigeria · Pharmaceutical manufacturing</b><small>History → now → clearly labelled future</small></div><button class="follow" onclick="followTopic('Pharmacy & Healthcare')">Follow</button></div>
+<div class="timeline"><div class="event"><div class="year">Past</div><b>Earlier policies and industry conditions</b></div><div class="event"><div class="year">Now</div><b>Current reporting and confirmed developments</b></div><div class="event"><div class="year">Future</div><b>Announced plans, scheduled events and forecasts</b></div></div>
+<div class="future"><b>Future ≠ fact.</b><br>Planned or forecast events are explicitly labelled.</div></div>
+<div class="head"><h2>Go deeper</h2></div>
+<div class="card topic"><div class="actions"><button onclick="location='/screen/explore'">Explore</button><button onclick="location='/screen/timeline'">Timeline</button><button onclick="location='/screen/following'">Following</button></div></div>
+</aside></div>
+
+{% elif screen=='explore' %}
+<div class="intro"><h2>Explore</h2><p>Discover subjects, entities and developing stories—not just today's headlines.</p></div>
+<div class="entitygrid">{% for n,icon,desc in topics %}<a class="card entity" href="/screen/topic-{{n|lower|replace(' ','-')}}"><b>{{icon}} {{n}}</b><small>{{desc}}</small></a>{% endfor %}<a class="card entity" href="/screen/topic-business"><b>↗ African startups</b><small>Funding · products · founders</small></a></div>
+<div class="head"><h2>How Signal thinks</h2><span>Source-first</span></div><div class="card result"><h3>One event, many sources.</h3><p>Signal is designed to group repetitive reporting while preserving every publisher's original article. AI is an optional layer, never the source.</p></div>
+
+{% elif screen=='search' %}
+<div class="intro"><h2>Search everything</h2><p>Current + historical articles stored by Signal, with topic and source filtering.</p></div>
+<div id="results"><div class="card result"><h3>Search is ready.</h3><p>Try a question, person, company, event or topic above. Results are drawn from the articles Signal has ingested.</p></div></div>
+
+{% elif screen=='timeline' %}
+<div class="intro"><h2>Timeline</h2><p>Connect past developments to what is happening now.</p></div>
+<div class="card topic"><div class="topicTop"><div><b>Recent Signal history</b><small>Events are based on ingested article dates.</small></div></div>
+<div class="timeline">{% for a in articles[:12] %}<div class="event"><div class="year">{{a.published_at[:10] if a.published_at else 'Undated'}} · {{a.source}}</div><b>{{a.title}}</b></div>{% endfor %}</div></div>
+
+{% elif screen.startswith('topic-') %}
+<div class="intro"><h2>{{screen.replace('topic-','').replace('-',' ').title()}}</h2><p>Latest reporting stored for this topic.</p></div>
+<div class="head"><h2>Latest</h2><span>{{articles|length}} stored signals</span></div>
+{% for a in articles %}<article class="card story"><div class="meta"><span class="dot"></span>{{a.source}} · {{a.topic}}</div><h3>{{a.title}}</h3><p>{{a.summary[:330]}}</p><div class="actions"><button class="primary" onclick="openOriginal('{{a.url|e}}')">Read original ↗</button><button class="ai" onclick="aiFor({{a.id}},'summary')">✦ Summary</button><button onclick="save({{a.id}})">▱ Save</button></div></article>{% else %}<div class="card result"><h3>No matching stories yet.</h3><p>Refresh the source monitor or add a source relevant to this topic.</p></div>{% endfor %}
+
+{% elif screen=='following' %}
+<div class="intro"><h2>Following</h2><p>Your watchlist for developments you don't want to lose track of.</p></div>
+{% for t in following %}<div class="card topic"><div class="topicTop"><div><b>{{t}}</b><small>Monitored for new developments</small></div><button class="follow" onclick="followTopic('{{t|e}}')">Following ✓</button></div></div>{% else %}<div class="card result"><h3>Nothing followed yet.</h3><p>Use Follow on a topic or article to build your watchlist.</p></div>{% endfor %}
+
+{% elif screen=='saved' %}
+<div class="intro"><h2>Saved</h2><p>Your library of articles worth returning to.</p></div>
+{% for a in articles %}<article class="card story"><div class="meta">{{a.source}} · {{a.topic}}</div><h3>{{a.title}}</h3><p>{{a.summary[:300]}}</p><div class="actions"><button class="primary" onclick="openOriginal('{{a.url|e}}')">Open original ↗</button><button onclick="save({{a.id}})">Remove</button></div></article>{% else %}<div class="card result"><h3>Your library is empty.</h3><p>Save articles from Home or a topic page.</p></div>{% endfor %}
+
+{% elif screen=='settings' %}
+<div class="intro"><h2>Settings</h2><p>Control your information experience.</p></div><div class="settings">
+<div class="card setting"><div><b>Live source refresh</b><small>Configured refresh interval: {{config_refresh if config_refresh else '10'}} minutes.</small></div><div class="toggle on"></div></div>
+<div class="card setting"><div><b>AI summaries</b><small>Optional. Requires an API key; original sources remain primary.</small></div><div class="toggle on"></div></div>
+<div class="card setting"><div><b>Low-noise design</b><small>Duplicate stories can be clustered in the production ingestion layer.</small></div><div class="toggle on"></div></div>
+<div class="card setting"><div><b>Source management</b><small>Edit DEFAULT_FEEDS in app.py to add authorized RSS sources.</small></div></div></div>
+{% endif %}
+</div></main>
+
+<nav class="bottom"><a href="/" class="{{'active' if screen=='home' else ''}}">Home</a><a href="/screen/explore">Explore</a><a href="/screen/search">Search</a><a href="/screen/following">Following</a><a href="/screen/saved">Saved</a></nav>
+<div class="toast" id="toast"></div><div class="modal" id="modal"><div class="modalbox"><button class="close" onclick="closeModal()">Close</button><h2 id="mt">Signal</h2><div id="mb"></div></div></div>
+
+<script>
+const toastEl=document.getElementById('toast'),modal=document.getElementById('modal'),mt=document.getElementById('mt'),mb=document.getElementById('mb');
+function toast(x){toastEl.textContent=x;toastEl.classList.add('show');setTimeout(()=>toastEl.classList.remove('show'),1700)}
+function openOriginal(u){window.open(u,'_blank','noopener,noreferrer')}
+function closeModal(){modal.classList.remove('open')}
+function searchFor(q){document.getElementById('q').value=q;doSearch()}
+function doSearch(){let q=document.getElementById('q').value.trim();if(!q)return;fetch('/api/articles?q='+encodeURIComponent(q)).then(r=>r.json()).then(d=>{location='/screen/search?q='+encodeURIComponent(q);})}
+if(location.pathname==='/screen/search'){const q=new URLSearchParams(location.search).get('q');if(q){fetch('/api/articles?q='+encodeURIComponent(q)).then(r=>r.json()).then(d=>{document.getElementById('results').innerHTML=d.articles.length?d.articles.map(a=>`<article class="card result"><div class="source">${a.source} · ${a.topic}</div><h3>${escapeHtml(a.title)}</h3><p>${escapeHtml((a.summary||'').slice(0,360))}</p><div class="actions"><button class="primary" onclick="openOriginal('${a.url.replaceAll("'","%27")}')">Read original ↗</button><button class="ai" onclick="aiFor(${a.id},'summary')">✦ Summary</button><button onclick="save(${a.id})">▱ Save</button></div></article>`).join(''):`<div class="card result"><h3>No results.</h3><p>Try a broader topic or phrase.</p></div>`})}}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function save(id){fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})}).then(r=>r.json()).then(d=>toast(d.saved?'Saved':'Removed from Saved'))}
+function followTopic(topic){fetch('/api/follow',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic})}).then(r=>r.json()).then(d=>toast(d.following?'Following '+topic:'Unfollowed '+topic))}
+function goTimeline(id){location='/screen/timeline#article-'+id}
+function aiFor(id,mode){fetch('/api/article/'+id).then(r=>r.json()).then(a=>{mt.textContent=mode==='summary'?'✦ AI Summary':'Why it matters';mb.innerHTML='<p>Generating from the stored source text…</p>';modal.classList.add('open');return fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:(a.title+'\n'+a.summary),mode})})}).then(r=>r.json()).then(d=>{mb.innerHTML='<p>'+escapeHtml(d.text||d.message||'AI unavailable.')+'</p><p><small>AI output is supplementary. Read the original source for the authoritative report.</small></p>'})}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/static/sw.js').catch(()=>{})}
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()})
+</script>
+</body></html>
